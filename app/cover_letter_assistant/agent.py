@@ -2,6 +2,7 @@ from google.adk.agents import LlmAgent
 from google.adk.tools.agent_tool import AgentTool
 from google.adk.runners import Runner
 from google.adk.artifacts import InMemoryArtifactService
+from google.adk.sessions import InMemorySessionService
 
 from . import prompt
 from .sub_agents.job_description_agent import job_description_agent
@@ -30,3 +31,13 @@ cover_letter_assistant = LlmAgent(
 )
 
 root_agent = cover_letter_assistant
+
+artifact_service = InMemoryArtifactService()
+session_service = InMemorySessionService()
+
+runner = Runner(
+    agent=cover_letter_assistant,
+    app_name="Cover Letter Assistant",
+    artifact_service= artifact_service,
+    session_service= session_service,
+)
