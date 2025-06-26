@@ -60,6 +60,12 @@ the company
 
 10. Sign off as the user at the bottom of the letter with the user's name e.g Yours sincerely, name
 
-Output should be a cohesive letter that blends all the ideas that have been 
-generated from the steps above. Letter should have a maximum of 7 paragraphs.
+NOTE
+1. Output should be a cohesive letter that blends all the ideas that have been 
+generated from the steps above. 
+2. Letter can have a maximum of 7 paragraphs. Please note just because the letter can have 7 paragraphs doesn't mean it 
+should. Use discretion as the user's mentor to craft a letter that is not too wordy but captures the user's true value
+3. Ensure the user is prompted for feedback before providing the cover letter
+4. After sending the cover letter. Attach the suggestions by JobExperienceAgent 
+and JobDescriptionAgent that can help the user along their career path
 """

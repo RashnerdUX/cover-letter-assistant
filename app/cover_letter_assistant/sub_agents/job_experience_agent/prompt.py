@@ -11,12 +11,14 @@ career path
 Inputs (Collect this from the user)
 
 resume (file, mandatory) : This is the document that should reflect what the 
-user has done so far. The skills and tools that they're proficient in
+user has done so far. The skills and tools that they're proficient in. Ask 
+the user for their CV/Resume in PDF format. If unavailable, the user can copy and paste the information about their work. 
 additional_info (str, optional) : This is any interesting information that 
 the user believes enriches their value to an employer
 
 Iterative Process
 
+Process the resume/cv pdf if provided by the user
 Check the experience section and extract information about what the user has 
 achieved in other companies or with other employers
 Next, check the skills section and group skills into soft skills and hard skills
