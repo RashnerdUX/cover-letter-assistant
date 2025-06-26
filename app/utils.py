@@ -1,5 +1,5 @@
 import os
-import pathlib
+import base64
 from typing import List
 import mimetypes
 
@@ -45,11 +45,13 @@ def convert_to_filedata(file:str) ->FileData:
     :param file:
     :return:
     """
-    file_path = pathlib.Path(file)
+    with open(file, "rb") as f:
+        file_bytes = f.read()
+    encoded = base64.b64encode(file_bytes).decode("utf-8")
 
     file_data = FileData(
-        serialized_file=file_path.read_bytes(),
-        mime_type= mimetypes.guess_type(file_path)[0],
+        serialized_file=encoded,
+        mime_type= mimetypes.guess_type(file)[0],
     )
     return file_data
 
@@ -88,7 +90,7 @@ def store_file(
     mime_type = "application/pdf"
     artifact = Part.from_bytes(
         mime_type=mime_type,
-        data= file.serialized_file,
+        data= base64.b64decode(file.serialized_file),
     )
 
     #Save the artifact
@@ -124,7 +126,7 @@ def format_for_adk(request: ChatRequest, user_id:str,
             artifact_service=artifact_service,
         )
         parts.append(Part.from_bytes(
-            data=request.file.serialized_file,
+            data=base64.b64decode(request.file.serialized_file),
             mime_type=request.file.mime_type
         ))
     #Next I need to add messages

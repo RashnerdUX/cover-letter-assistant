@@ -8,7 +8,7 @@ class FileData(BaseModel):
     Attributes
         serialized_file: The bytes form of the file uploaded by user
     """
-    serialized_file: bytes
+    serialized_file: str
     mime_type: str
 
 class ChatRequest(BaseModel):
