@@ -1,0 +1,20 @@
+# Docker ignore file
+
+# Git
+.git
+.gitignore
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+venv/
+
+# IDE / Editor specific
+.idea/
+.vscode/
+
+# Other
+.env
