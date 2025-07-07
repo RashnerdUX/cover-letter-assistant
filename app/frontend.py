@@ -1,11 +1,14 @@
 from typing import Dict, List,Any
 import requests
+import dotenv
+import os
 
 import gradio as gr
 
 from schema import ChatRequest, ChatResponse, FileData
 from utils import convert_to_filedata
 
+dotenv.load_dotenv()
 
 def connect_to_backend(
     message: Dict[str, Any],
@@ -27,7 +30,8 @@ def connect_to_backend(
     )
 
     try:
-        response = requests.post("http://127.0.0.1:8081/chat",
+        response = requests.post(os.getenv("BACKEND_URL",
+                                           "http://localhost:8081/chat"),
                                  json=user_request.model_dump())
         response.raise_for_status()
 

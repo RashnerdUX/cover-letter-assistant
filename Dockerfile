@@ -13,11 +13,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     supervisor \
  && rm -rf /var/lib/apt/lists/*
 
-# Copy project files
-COPY . /app
+# Copy only the requirements file first to leverage Docker cache
+COPY requirements.txt .
 
 # Install Python dependencies
 RUN pip install --upgrade pip && pip install -r requirements.txt
+
+# Copy project files
+COPY ./app .
 
 # Copy Supervisor config
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
