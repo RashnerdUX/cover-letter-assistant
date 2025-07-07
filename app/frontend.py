@@ -68,7 +68,7 @@ def connect_to_backend(
 
         result = ChatResponse(**data)
 
-        return result.response
+        return result.response if result.response != "" else result.error
     except requests.exceptions.RequestException as e:
         return [f"Error connecting to backend service: {str(e)}"]
 
