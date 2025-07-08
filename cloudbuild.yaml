@@ -1,0 +1,45 @@
+steps:
+  # Build the Docker image
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '-t'
+      - 'europe-west2-docker.pkg.dev/career-assistant-464207/my-ai-agents-repo/cover-letter
+      -assistant:$SHORT_SHA' # <--- AR path
+      - '-t'
+      - 'europe-west2-docker.pkg.dev/career-assistant-464207/my-ai-agents-repo/cover-letter-assistant:latest'   # <--- AR path
+      - '.'
+
+  # Push the Docker image to Artifact Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'push'
+      - 'europe-west2-docker.pkg.dev/career-assistant-464207/my-ai-agents-repo/cover-letter-assistant:$SHORT_SHA' # <--- AR path (push both tags)
+      - 'europe-west2-docker.pkg.dev/career-assistant-464207/my-ai-agents-repo/cover-letter-assistant:latest'   # <--- AR path
+
+  # Deploy to Cloud Run
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args:
+      - 'run'
+      - 'deploy'
+      - 'cover-letter-assistant'
+      - '--image=europe-west2-docker.pkg.dev/career-assistant-464207/my-ai-agents-repo/cover-letter-assistant:latest' # <--- AR path
+      - '--region=europe-west2'
+      - '--platform=managed'
+      - '--allow-unauthenticated'
+      - '--memory=2Gi'
+      - '--cpu=2'
+      - '--timeout=900s'
+      - '--concurrency=10'
+      - '--port=8080'
+      - '--set-env-vars=BACKEND_URL=http://localhost:8081, PORT=8080'
+      - '--set-secrets=GOOGLE_API_KEY=google-api-key:latest,GEMINI_API_KEY=gemini-api-key:latest'
+      - '--execution-environment=gen2'
+      - '--cpu-boost'
+
+# Declare images that Cloud Build will store in Artifact Registry
+images:
+  - 'europe-west2-docker.pkg.dev/career-assistant-464207/my-ai-agents-repo/cover-letter-assistant:$SHORT_SHA' # <--- AR path
+  - 'europe-west2-docker.pkg.dev/career-assistant-464207/my-ai-agents-repo/cover-letter-assistant:latest'   # <--- AR path
+
+timeout: 1200s
