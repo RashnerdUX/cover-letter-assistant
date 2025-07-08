@@ -1,4 +1,5 @@
 import asyncio
+import os
 
 import uvicorn
 from fastapi import FastAPI, Depends, Body
@@ -17,6 +18,10 @@ from utils import format_for_adk
 
 #Load our environment variables
 load_dotenv()
+
+#confirm that the env variables are loaded
+print(f"BACKEND_URL: {os.getenv('BACKEND_URL')}")
+print(f"GOOGLE_API_KEY: {'***' if os.getenv('GOOGLE_API_KEY') else 'NOT SET'}")
 
 #Global variables
 APP_NAME = "cover_letter_assistant"
