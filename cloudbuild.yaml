@@ -32,7 +32,8 @@ steps:
       - '--timeout=900s'
       - '--concurrency=10'
       - '--port=8080'
-      - '--set-env-vars=BACKEND_URL=http://localhost:8081, PORT=8080'
+      - '--set-env-vars=BACKEND_URL=http://localhost:8081,
+      GOOGLE_GENAI_USE_VERTEXAI=FALSE'
       - '--set-secrets=GOOGLE_API_KEY=google-api-key:latest,GEMINI_API_KEY=gemini-api-key:latest'
       - '--execution-environment=gen2'
       - '--cpu-boost'
